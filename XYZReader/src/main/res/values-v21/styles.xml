@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.Bacon.Detail" parent="@style/Theme.Bacon">
+        <item name="android:textColorSecondary">@color/toolbar_text</item>
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="toolbarStyle">@style/TransparentToolbarStyle</item>
+    </style>
+
+    <style name="TransparentToolbarStyle" parent="@style/Widget.AppCompat.Toolbar">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColorPrimary">@color/toolbar_text</item>
+        <item name="background">@android:color/transparent</item>
+        <item name="popupTheme">@style/Theme.AppCompat.Light</item>
+    </style>
+
+</resources>
