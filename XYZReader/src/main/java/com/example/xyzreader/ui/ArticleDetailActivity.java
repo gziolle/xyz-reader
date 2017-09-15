@@ -42,6 +42,8 @@ import java.util.GregorianCalendar;
 public class ArticleDetailActivity extends AppCompatActivity
         implements LoaderManager.LoaderCallbacks<Cursor> {
 
+    private static final String LOG_TAG = ArticleDetailActivity.class.getSimpleName();
+
     private Cursor mCursor;
     private long mStartId;
 
@@ -153,8 +155,8 @@ public class ArticleDetailActivity extends AppCompatActivity
             String date = mCursor.getString(ArticleLoader.Query.PUBLISHED_DATE);
             return dateFormat.parse(date);
         } catch (ParseException ex) {
-            Log.e("test", ex.getMessage());
-            Log.i("test", "passing today's date");
+            Log.e(LOG_TAG, ex.getMessage());
+            Log.i(LOG_TAG, "passing today's date");
             return new Date();
         }
     }

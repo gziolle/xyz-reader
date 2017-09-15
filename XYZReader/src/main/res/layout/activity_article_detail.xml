@@ -27,27 +27,26 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
                 android:alpha="0.8"
-                android:background="#111111"
-                android:orientation="vertical">
+                android:background="@drawable/gradient_black_transparent"
+                android:orientation="vertical"
+                android:paddingStart="@dimen/toolbar_padding_sides"
+                android:paddingEnd="@dimen/toolbar_padding_sides">
 
                 <TextView
                     android:id="@+id/article_title"
-                    style="?android:attr/textAppearanceLarge"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Headline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="sans-serif-condensed"
-                    android:lineSpacingMultiplier="0.9"
                     android:paddingBottom="@dimen/detail_metabar_title_bottom_padding"
-                    android:textColor="#fff"
-                    android:textSize="@dimen/detail_title_text_size"
+                    android:textColor="@color/primary_text_inverse"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/article_byline"
-                    style="?android:attr/textAppearanceSmall"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#8fff" />
+                    android:textColor="@color/secondary_text" />
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar
