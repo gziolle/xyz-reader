@@ -3,6 +3,7 @@ package com.example.xyzreader.ui;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.LoaderManager;
+import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.graphics.Typeface;
@@ -107,8 +108,15 @@ public class ArticleDetailActivity extends AppCompatActivity
         mShareFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO add share function
+                Intent shareIntent = new Intent();
+                shareIntent.setAction(Intent.ACTION_SEND);
 
+                String shareText = String.format(
+                        getString(R.string.share_text, mArticleTitleTextView.getText().toString()));
+                shareIntent.putExtra(Intent.EXTRA_TEXT, shareText);
+                shareIntent.setType("text/plain");
+                startActivity(Intent.createChooser(
+                     shareIntent, getString(R.string.share_title)));
             }
         });
 

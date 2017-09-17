@@ -9,4 +9,7 @@
 
     <string name="up">Up</string>
 
+    <string name="share_text">Read %1$s on XYZ Reader! Download it now on Play Store.</string>
+    <string name="share_title">Share</string>
+
 </resources>
