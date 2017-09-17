@@ -113,8 +113,6 @@ public class ArticleDetailFragment extends Fragment implements
     }
 
     private void updateLayout() {
-        mBodyTextView.setTypeface(Typeface.createFromAsset(getResources().getAssets(), "Rosario-Regular.ttf"));
-
         if (mCursor != null) {
             mBodyTextView.setText(Html.fromHtml(mCursor.getString(ArticleLoader.Query.BODY).replaceAll("(\r\n|\n)", "<br />")));
         } else {
