@@ -26,7 +26,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:alpha="0.8"
                 android:background="@drawable/gradient_black_transparent"
                 android:orientation="vertical"
                 android:paddingStart="@dimen/toolbar_padding_sides"
@@ -46,7 +45,7 @@
                     android:textAppearance="@style/TextAppearance.AppCompat.Small"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/secondary_text" />
+                    android:textColor="@color/ltgray" />
             </LinearLayout>
 
             <android.support.v7.widget.Toolbar
@@ -54,7 +53,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/toolbar_height"
                 android:paddingTop="@dimen/toolbar_padding_top"
-                app:layout_collapseMode="pin"/>
+                app:layout_collapseMode="pin">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:contentDescription="@string/app_name"
+                    android:src="@drawable/logo" />
+
+            </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
