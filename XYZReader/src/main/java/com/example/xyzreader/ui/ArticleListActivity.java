@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.content.Loader;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -25,6 +26,7 @@ import com.example.xyzreader.R;
 import com.example.xyzreader.data.ArticleLoader;
 import com.example.xyzreader.data.ItemsContract;
 import com.example.xyzreader.data.UpdaterService;
+import com.example.xyzreader.remote.NetworkConnectionReceiver;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -38,12 +40,14 @@ import java.util.GregorianCalendar;
  * activity presents a grid of items as cards.
  */
 public class ArticleListActivity extends AppCompatActivity implements
-        LoaderManager.LoaderCallbacks<Cursor>, SwipeRefreshLayout.OnRefreshListener {
+        LoaderManager.LoaderCallbacks<Cursor>, SwipeRefreshLayout.OnRefreshListener, NetworkConnectionReceiver.NetworkConnectionInterface {
 
     private static final String TAG = ArticleListActivity.class.toString();
+    private static final int LOADER_ID = 101;
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private Adapter mAdapter;
+    private Snackbar mSnackbar;
 
     private SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.sss");
     // Use default locale format
@@ -52,6 +56,8 @@ public class ArticleListActivity extends AppCompatActivity implements
     private GregorianCalendar START_OF_EPOCH = new GregorianCalendar(2,1,1);
 
     private boolean mIsRefreshing = false;
+
+    private NetworkConnectionReceiver mInternetReceiver;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,10 +76,11 @@ public class ArticleListActivity extends AppCompatActivity implements
         mAdapter.setHasStableIds(true);
         mRecyclerView.setAdapter(mAdapter);
 
-        getLoaderManager().initLoader(0, null, this);
-
         if (savedInstanceState == null) {
+            getLoaderManager().initLoader(LOADER_ID, null, this);
             refresh();
+        } else{
+            getLoaderManager().restartLoader(LOADER_ID, null, this);
         }
     }
 
@@ -86,12 +93,20 @@ public class ArticleListActivity extends AppCompatActivity implements
         super.onStart();
         registerReceiver(mRefreshingReceiver,
                 new IntentFilter(UpdaterService.BROADCAST_ACTION_STATE_CHANGE));
+
+        mInternetReceiver = new NetworkConnectionReceiver();
+        mInternetReceiver.registerReceiver(this);
+
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("android.net.conn.CONNECTIVITY_CHANGE");
+        registerReceiver(mInternetReceiver, filter);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         unregisterReceiver(mRefreshingReceiver);
+        unregisterReceiver(mInternetReceiver);
     }
 
     @Override
@@ -108,6 +123,25 @@ public class ArticleListActivity extends AppCompatActivity implements
             }
         }
     };
+
+    @Override
+    public void showSnackBar(String text) {
+        mSnackbar = Snackbar.make(mSwipeRefreshLayout, text, Snackbar.LENGTH_INDEFINITE);
+        mSnackbar.setAction(getString(R.string.action_ok), new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mSnackbar.dismiss();
+            }
+        });
+        mSnackbar.show();
+    }
+
+    @Override
+    public void dismissSnackBar() {
+        if(mSnackbar != null && mSnackbar.isShown()){
+            mSnackbar.dismiss();
+        }
+    }
 
     private void updateRefreshingUI() {
         mSwipeRefreshLayout.setRefreshing(mIsRefreshing);

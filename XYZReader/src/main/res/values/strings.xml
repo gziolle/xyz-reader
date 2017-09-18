@@ -12,4 +12,8 @@
     <string name="share_text">Read %1$s on XYZ Reader! Download it now on Play Store.</string>
     <string name="share_title">Share</string>
 
+    <string name="no_internet">There is no Internet Connection.</string>
+
+    <string name="action_ok">OK</string>
+
 </resources>
