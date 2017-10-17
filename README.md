@@ -10,6 +10,7 @@ Libraries
 This project uses the following libraries:
 
 [OkHttp](http://square.github.io/okhttp)
+
 [Glide] (http://bumptech.github.io/glide/)
 
 
